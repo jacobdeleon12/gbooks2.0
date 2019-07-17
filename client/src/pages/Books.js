@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../components/Grid";
 import { List, ListItem } from "../components/List";
 import { Input,  FormBtn } from "../components/Form";
-// import ResultsSeach from "../components/Results-search"
+import ResultsSeach from "../components/Results-search"
 // import { Query } from "mongoose";
 
 class Books extends Component {
@@ -65,9 +65,9 @@ class Books extends Component {
           authers.push(info[i])
         }
         let authersinfo= authers.toString().split(",").join(" and ");
-        // discription
+        // description
         // console.log(items.volumeInfo.description);
-        let discription = items.volumeInfo.description
+        let description = items.volumeInfo.description
         // thumbnail
         // console.log(items.volumeInfo.imageLinks.thumbnail);
         let img = items.volumeInfo.imageLinks.thumbnail
@@ -78,7 +78,7 @@ class Books extends Component {
         this.setState({bookData:{
           title:title,
           authors:authersinfo,
-          discription:discription,
+          description:description,
           img:img,
           previewLink:previewLink
         }})
@@ -102,20 +102,6 @@ class Books extends Component {
     
   };
 
-
-
-  // handleFormSubmit = event => {
-  //   event.preventDefault();
-  //   if (this.state.title && this.state.author) {
-  //     API.saveBook({
-  //       title: this.state.title,
-  //       author: this.state.author,
-  //       synopsis: this.state.synopsis
-  //     })
-  //       .then(res => this.loadBooks())
-  //       .catch(err => console.log(err));
-  //   }
-  // };
 
   render() {
     return (
@@ -145,15 +131,17 @@ class Books extends Component {
             <Jumbotron>
               <h1>Books On My List</h1>
             </Jumbotron>
+           
+        {/* {console.log(this.state.bookData)} */}
+            {/* {console.log(this.state.bookData)}
             {this.state.bookData.length ? (
-              // <ResultsSeach></ResultsSeach>
               <List>
                 {this.state.bookData.map(book => (
                
                   <ListItem key={book.title}>
                     <Link to={"/"}>
                       <strong>
-                        {book.title} by {book.discription}
+                        {book.title} by {book.authors}
                       </strong>
                     </Link>
                     <DeleteBtn onClick={() => this.deleteBook(book._id)} />
@@ -162,16 +150,20 @@ class Books extends Component {
               </List>
             ) : (
               <h3>No Results to Display</h3>
-            )}
-
-            {/* {this.state.result.length ? (
-              <ResultsSeach>
-                
-
-              </ResultsSeach>
-            ): (
-              <h3>No Results to Display</h3>
             )} */}
+
+            
+            <ResultsSeach 
+            thumbnail = {this.state.bookData.img}
+            title = {this.state.bookData.title}
+            auther = {this.state.bookData.authors}
+            description = {this.state.bookData.description}
+            // link = {this.state.bookData.previewLink}
+            >
+      
+            </ResultsSeach>
+          
+          
 
           </Col>
         </Row>

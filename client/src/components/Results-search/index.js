@@ -5,10 +5,10 @@ function resultsSeach(props) {
   return (
     <div className="text-center">
       <img alt={props.title} className="img-fluid" src={props.thumbnail} style={{ margin: "0 auto" }} />
-      <h3>title: {props.title}</h3>
+      <h3>Title: {props.title}</h3>
       <h4>Auther(s): {props.auther}</h4>
-      <p>description: {props.description}</p>
-      <Link to={props.previewLink}></Link>
+      <p>Description: {props.description}</p>
+      {/* <Link to={props.previewLink}>More Info</Link> */}
     </div>
   );
 }
