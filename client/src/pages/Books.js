@@ -16,20 +16,21 @@ class Books extends Component {
     author: "",
     synopsis: "",
     search:"",
-    result:{}
+    result:{},
+    bookData:{}
   };
 
-  componentDidMount() {
-    this.loadBooks();
-  }
+  // componentDidMount() {
+  //   this.loadBooks();
+  // }
 
-  loadBooks = () => {
-    API.getBooks()
-      .then(res =>
-        this.setState({ books: res.data, title: "", author: "", synopsis: "" })
-      )
-      .catch(err => console.log(err));
-  };
+  // loadBooks = () => {
+  //   API.getBooks()
+  //     .then(res =>
+  //       this.setState({ books: res.data, title: "", author: "", synopsis: "" })
+  //     )
+  //     .catch(err => console.log(err));
+  // };
 
   deleteBook = id => {
     API.deleteBook(id)
@@ -54,20 +55,37 @@ class Books extends Component {
         // console.log(items.volumeInfo);
 
         //for titles of book
-        console.log(items.volumeInfo.title);
-        //for authers
-        let info =items.volumeInfo.authors
+        let title = items.volumeInfo.title
+        // console.log(items.volumeInfo.title);
+        // for authers
+        var info =items.volumeInfo.authors
+        let authers = []
         for (let i = 0; i < info.length; i++) {
-          console.log(info[i]);
+          // console.log(info[i]);
+          authers.push(info[i])
         }
+        let authersinfo= authers.toString().split(",").join(" and ");
         // discription
-        console.log(items.volumeInfo.description);
+        // console.log(items.volumeInfo.description);
+        let discription = items.volumeInfo.description
         // thumbnail
-        console.log(items.volumeInfo.imageLinks.thumbnail);
+        // console.log(items.volumeInfo.imageLinks.thumbnail);
+        let img = items.volumeInfo.imageLinks.thumbnail
         // link to previewLink
-        console.log(items.volumeInfo.previewLink);
+        // console.log(items.volumeInfo.previewLink);
+        let previewLink = items.volumeInfo.previewLink
 
+        this.setState({bookData:{
+          title:title,
+          authors:authersinfo,
+          discription:discription,
+          img:img,
+          previewLink:previewLink
+        }})
 
+        // console.log(this.state.bookData);
+        // console.log(this.state.bookData.authors);
+        
         
       });
 
@@ -127,14 +145,15 @@ class Books extends Component {
             <Jumbotron>
               <h1>Books On My List</h1>
             </Jumbotron>
-            {this.state.result.length ? (
+            {this.state.bookData.length ? (
               // <ResultsSeach></ResultsSeach>
               <List>
-                {this.state.result.map(book => (
-                  <ListItem key={book._id}>
-                    <Link to={"/books/" + book._id}>
+                {this.state.bookData.map(book => (
+               
+                  <ListItem key={book.title}>
+                    <Link to={"/"}>
                       <strong>
-                        {book.title} by {book.author}
+                        {book.title} by {book.discription}
                       </strong>
                     </Link>
                     <DeleteBtn onClick={() => this.deleteBook(book._id)} />
